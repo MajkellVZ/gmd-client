@@ -15,7 +15,7 @@ const ProductImage = ({id}) => {
     const {media} = formData;
 
     const getMedia = async (id) => {
-        const res = await axios.get(`http://localhost:5000/api/media/single_image/product/${id}`);
+        const res = await axios.get(`http://165.227.251.127/api/media/single_image/product/${id}`);
         console.log(res.data);
         res.data && setFormData({...formData, media: res.data, id: id})
     };
@@ -23,7 +23,7 @@ const ProductImage = ({id}) => {
     return (
         <div>
             {media ?
-                <img className="card-img-top" src={`http://localhost:5000/api/media/${media.image_path}?${Date.now()}`}
+                <img className="card-img-top" src={`http://165.227.251.127/api/media/${media.image_path}?${Date.now()}`}
                      key={Date.now()} alt="Card image"/> :
                 <img className="card-img-top"
                      src={`https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS820ZLjEZOgW3rRxKEINY9KVmxTCh75dRo_RoO6tw591SLZQAX&${Date.now()}`}

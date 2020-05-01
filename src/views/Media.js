@@ -39,7 +39,7 @@ const Media = ({id, media, getImages, createMedia, deleteMedia}) => {
                 <br/>
                 {media.medias && media.medias.map(img => (
                     <div>
-                        <img alt={id} src={`http://localhost:5000/api/media/${img.image_path}`}
+                        <img alt={id} src={`http://165.227.251.127/api/media/${img.image_path}`}
                              style={{width: '200px'}}/>
                         <input type={"submit"} className={'btn btn-danger'} value={'x'}
                                onClick={() => onDelete(img.id)}/>

@@ -19,7 +19,7 @@ const CarouselImage = ({id, getImages, media, showArrows}) => {
                 >
                     {media.medias && media.medias.map(image => (
                             <div key={image.id}>
-                                <img src={`http://localhost:5000/api/media/${image.image_path}`} key={image.id}/>
+                                <img src={`http://165.227.251.127/api/media/${image.image_path}`} key={image.id}/>
                             </div>
                         )
                     )}
