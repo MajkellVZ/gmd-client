@@ -9,7 +9,7 @@ import {
 } from "../actions/types";
 import {setAlert} from "./alert";
 
-const API_URL = 'http://165.227.251.127/api';
+const API_URL = 'https://gmd-server.xyz/api';
 // const API_URL = 'http://localhost:5000/api';
 
 export const getProducts = () => async dispatch => {

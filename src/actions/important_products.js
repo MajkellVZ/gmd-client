@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {GET_IMPORTANT_PRODUCTS, FAIL_IMPORTANT_PRODUCTS} from "../actions/types";
 
-const API_URL = 'http://165.227.251.127/api';
+const API_URL = 'https://gmd-server.xyz/api';
 // const API_URL = 'http://localhost:5000/api';
 
 export const getImportantProducts = () => async dispatch => {
