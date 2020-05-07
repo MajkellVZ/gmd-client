@@ -10,7 +10,7 @@ class Footer extends React.Component {
                             <div className="row">
                                 <div className="col">
                                     <ul className="social-network social-circle">
-                                        <li><a href="https://www.instagram.com/_gmd_shop_/" target={"_blank"} className="icoInstagram" title="Instagram"><i
+                                        <li><a href="https://www.instagram.com/gmd.al/" target={"_blank"} className="icoInstagram" title="Instagram"><i
                                             className="fa fa-instagram"></i></a></li>
                                         <li><a href="https://api.whatsapp.com/send?phone=+355696840455&text=Pershendetje" target={"_blank"} className="icoWhatsapp" title="Whatsapp"><i
                                             className="fa fa-whatsapp"></i></a></li>
