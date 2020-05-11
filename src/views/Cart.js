@@ -23,6 +23,7 @@ const Cart = ({buy}) => {
 
     useEffect(() => {
         getCookieProducts();
+        window.scrollTo(0, 0);
     }, []);
 
     const [formData, setFormData] = useState({
