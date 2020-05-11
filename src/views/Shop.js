@@ -8,11 +8,12 @@ import {connect} from "react-redux";
 import {Link as Scroll, Link} from 'react-scroll';
 import Modal from 'react-modal';
 import {css} from "@emotion/core";
-import SquareLoader from "react-spinners/SquareLoader";
+import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
 
 const override = css`
   display: block;
   margin: 0 auto;
+  margin-top: 150px;
   border-color: yellow;
 `;
 
@@ -21,6 +22,15 @@ const customLoadingStyles = {
         color: 'white',
         background: '#00303F',
         background: '#00303F',
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        transform: 'translate(-50%, -50%)',
+        width: '100%',
+        height: '100%',
+        overflowX: 'hidden',
+        overflowY: 'hidden'
     }
 };
 
@@ -93,11 +103,10 @@ const Shop = ({getProducts, getProductsByCategory, getProductsAll, filterProduct
                 isOpen={loading}
                 style={customLoadingStyles}
             >
-                <br/>
                 <div className={'row'}>
-                    <SquareLoader
+                    <ClimbingBoxLoader
                         css={override}
-                        size={300}
+                        size={50}
                         color={"rgba(242, 211, 73, 0.8)"}
                         loading={loading}
                     />
