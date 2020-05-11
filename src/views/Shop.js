@@ -6,42 +6,75 @@ import {getProducts, getProductsAll, getProductsByCategory, filterProductsNameCa
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {Link as Scroll, Link} from 'react-scroll';
+import Modal from 'react-modal';
+import {css} from "@emotion/core";
+import SquareLoader from "react-spinners/SquareLoader";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: yellow;
+`;
+
+const customLoadingStyles = {
+    content: {
+        color: 'white',
+        background: '#00303F',
+        background: '#00303F',
+    }
+};
 
 const Shop = ({getProducts, getProductsByCategory, getProductsAll, filterProductsNameCategory, products}) => {
     useEffect(() => {
         getProducts();
         window.scrollTo(0, 0);
+        setTimeout(() => {
+            setFormData({...formData, loading: false})
+        }, 2000)
     }, [getProducts]);
 
     const [formData, setFormData] = useState({
         type: '',
-        name: ''
+        name: '',
+        loading: true
     });
 
-    const {name, type} = formData;
+    const {name, type, loading} = formData;
 
     const onClickAll = e => {
         e.preventDefault();
         getProductsAll();
-        setFormData({...formData, type: ''})
+        setFormData({...formData, type: '', loading: true})
+        setTimeout(() => {
+            setFormData({...formData, type: '', loading: false})
+        }, 1500)
     };
 
     const onClickHouse = e => {
         e.preventDefault();
         getProductsByCategory("household");
-        setFormData({...formData, type: 'household'})
+        setFormData({...formData, type: 'household', loading: true})
+        setTimeout(() => {
+            setFormData({...formData, type: 'household', loading: false})
+        }, 1500)
     };
 
     const onClickPool = e => {
         e.preventDefault();
         getProductsByCategory("pool");
-        setFormData({...formData, type: 'pool'})
+        setFormData({...formData, type: 'pool', loading: true})
+        setTimeout(() => {
+            setFormData({...formData, type: 'pool', loading: false})
+        }, 1500)
     };
 
     const onClickToys = e => {
         e.preventDefault();
         getProductsByCategory("toys");
-        setFormData({...formData, type: 'toys'})
+        setFormData({...formData, type: 'toys', loading: true})
+        setTimeout(() => {
+            setFormData({...formData, type: 'toys', loading: false})
+        }, 1500)
     };
 
     const onChange = (e) => {
@@ -55,7 +88,21 @@ const Shop = ({getProducts, getProductsByCategory, getProductsAll, filterProduct
 
     return (
         <div>
-            <NavBar type={type} />
+            <NavBar type={type}/>
+            <Modal
+                isOpen={loading}
+                style={customLoadingStyles}
+            >
+                <br/>
+                <div className={'row'}>
+                    <SquareLoader
+                        css={override}
+                        size={300}
+                        color={"rgba(242, 211, 73, 0.8)"}
+                        loading={loading}
+                    />
+                </div>
+            </Modal>
             <div className={'container'}>
                 <div className={'row justify-content-center align-items-center'}>
                     <div className="w3-padding-32">
@@ -86,7 +133,7 @@ const Shop = ({getProducts, getProductsByCategory, getProductsAll, filterProduct
                 <div className={'row justify-content-center align-items-center'}>
                     <div className={'col-md-4 offset-md-0 about-us'}>
                         <input type="text" name={'name'} className={'w3-input'} placeholder={'Kerko produktin...'}
-                        onChange={e => onChange(e)} onKeyUp={() => onFilter()}/>
+                               onChange={e => onChange(e)} onKeyUp={() => onFilter()}/>
                     </div>
                 </div>
                 <div className={'row'}>
@@ -114,4 +161,9 @@ const mapStateToProps = (state, props) => ({
     products: state.products
 });
 
-export default connect(mapStateToProps, {getProducts, getProductsByCategory, getProductsAll, filterProductsNameCategory})(Shop);
+export default connect(mapStateToProps, {
+    getProducts,
+    getProductsByCategory,
+    getProductsAll,
+    filterProductsNameCategory
+})(Shop);

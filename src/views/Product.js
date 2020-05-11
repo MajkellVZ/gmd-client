@@ -8,6 +8,14 @@ import Modal from 'react-modal';
 import Cookies from 'universal-cookie';
 import NavBar from "../components/NavBar";
 import Alert from "../components/Alert";
+import { css } from "@emotion/core";
+import SquareLoader from "react-spinners/SquareLoader";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: yellow;
+`;
 
 const cookies = new Cookies();
 
@@ -19,10 +27,21 @@ const customStyles = {
     }
 };
 
+const customLoadingStyles = {
+    content: {
+        color: 'white',
+        background: '#00303F',
+        background: '#00303F',
+    }
+};
+
 const Product = ({id, getProduct, buy, products}) => {
     useEffect(() => {
         getProduct(id);
         window.scrollTo(0, 0);
+        setTimeout(() => {
+            setFormData({...formData, loading: false})
+        }, 1500)
     }, [getProduct]);
 
     const [formData, setFormData] = useState({
@@ -34,12 +53,13 @@ const Product = ({id, getProduct, buy, products}) => {
         emptyQuantity: false,
         inCart: false,
         showArrows: true,
-        no_email: false
+        no_email: false,
+        loading: true
     });
 
     const [modalIsOpen, setIsOpen] = useState(false);
 
-    const {full_name, email, phone, address, quantity, emptyQuantity, inCart, showArrows, no_email} = formData;
+    const {full_name, email, phone, address, quantity, emptyQuantity, inCart, showArrows, no_email, loading} = formData;
 
     const onChange = e => setFormData({...formData, [e.target.name]: e.target.value});
 
@@ -124,6 +144,20 @@ const Product = ({id, getProduct, buy, products}) => {
     return (
         <div className={'main-container'}>
             <NavBar type={products.product && products.product.category}/>
+            <Modal
+                isOpen={loading}
+                style={customLoadingStyles}
+            >
+                <br/>
+                <div className={'row'}>
+                    <SquareLoader
+                        css={override}
+                        size={300}
+                        color={"rgba(242, 211, 73, 0.8)"}
+                        loading={loading}
+                    />
+                </div>
+            </Modal>
             <br/>
             <Alert/>
             {emptyQuantity && <div className={'container'}>
