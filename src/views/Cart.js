@@ -241,7 +241,6 @@ const Cart = ({buy}) => {
                     Faleminderit</p>
             </div>
             <ImportProducts/>
-            <br/>
         </div>
     )
 };

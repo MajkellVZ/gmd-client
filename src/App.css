@@ -634,7 +634,7 @@ ul.social-network li {
   overflow: hidden;
   display: block;
   position: relative;
-  padding-bottom: 10px; /* height of your footer */
+  /*padding-bottom: 10px; !* height of your footer *!*/
 }
 
 hr {
