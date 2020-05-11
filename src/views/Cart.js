@@ -81,6 +81,8 @@ const Cart = ({buy}) => {
 
         setIsOpen(false);
         getCookieProducts();
+
+        window.scrollTo(0, 0);
     };
 
     const onDelete = (id) => {

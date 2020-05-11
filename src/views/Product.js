@@ -96,6 +96,8 @@ const Product = ({id, getProduct, buy, products}) => {
         getProduct(id);
 
         setIsOpen(false);
+
+        window.scrollTo(0, 0);
     };
 
     const onCart = () => {
