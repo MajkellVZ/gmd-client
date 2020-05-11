@@ -50,7 +50,7 @@ const Product = ({id, getProduct, buy, products}) => {
         getProduct(id);
         window.scrollTo(0, 0);
         setTimeout(() => {
-            setFormData({...formData, loading: false})
+            setFormData({...formData, loading: false, showArrows: true})
         }, 1500)
     }, [getProduct]);
 
@@ -62,7 +62,7 @@ const Product = ({id, getProduct, buy, products}) => {
         quantity: 1,
         emptyQuantity: false,
         inCart: false,
-        showArrows: true,
+        showArrows: false,
         no_email: false,
         loading: true
     });
