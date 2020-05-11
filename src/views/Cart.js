@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 import {getProduct} from "../actions/products";
 import NavBar from "../components/NavBar";
 import Alert from "../components/Alert";
+import ImportProducts from "../components/ImportantProducts";
 
 const cookies = new Cookies();
 
@@ -238,6 +239,7 @@ const Cart = ({buy}) => {
                     <br/>
                     Faleminderit</p>
             </div>
+            <ImportProducts/>
             <br/>
         </div>
     )
