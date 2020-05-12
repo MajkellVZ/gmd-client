@@ -8,6 +8,15 @@ import {getProduct} from "../actions/products";
 import NavBar from "../components/NavBar";
 import Alert from "../components/Alert";
 import ImportProducts from "../components/ImportantProducts";
+import { css } from "@emotion/core";
+import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  margin-top: 100px;
+  border-color: yellow;
+`;
 
 const cookies = new Cookies();
 
@@ -19,11 +28,30 @@ const customStyles = {
     }
 };
 
+const customLoadingStyles = {
+    content: {
+        color: 'white',
+        background: '#00303F',
+        background: '#00303F',
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        transform: 'translate(-50%, -50%)',
+        width: '100%',
+        height: '100%',
+        overflowX: 'hidden',
+        overflowY: 'hidden'
+    }
+};
+
 const Cart = ({buy}) => {
 
     useEffect(() => {
-        getCookieProducts();
         window.scrollTo(0, 0);
+        setTimeout(() => {
+            setFormData({...formData, loading: false, products: cookies.get('product')})
+        }, 1500);
     }, []);
 
     const [formData, setFormData] = useState({
@@ -33,7 +61,8 @@ const Cart = ({buy}) => {
         address: '',
         products: null,
         quantity_error: false,
-        no_email: false
+        no_email: false,
+        loading: true
     });
 
     const getCookieProducts = () => {
@@ -42,13 +71,15 @@ const Cart = ({buy}) => {
 
     const [modalIsOpen, setIsOpen] = useState(false);
 
-    const {full_name, email, phone, address, products, quantity_error, no_email} = formData;
+    const {full_name, email, phone, address, products, quantity_error, no_email, loading} = formData;
 
     const onChange = e => setFormData({...formData, [e.target.name]: e.target.value});
 
     const onCheck = () => {
         setFormData({...formData, no_email: !no_email, email: !no_email ? 'xxx@gmd.com' : ''});
     };
+
+    console.log(products)
 
     const onBuy = () => setIsOpen(true);
 
@@ -157,6 +188,20 @@ const Cart = ({buy}) => {
     return (
         <div className={'cart main-container'}>
             <NavBar/>
+            <Modal
+                isOpen={loading}
+                style={customLoadingStyles}
+            >
+                <br/>
+                <div className={'row'}>
+                    <ClimbingBoxLoader
+                        css={override}
+                        size={50}
+                        color={"rgba(242, 211, 73, 0.8)"}
+                        loading={loading}
+                    />
+                </div>
+            </Modal>
             <br/>
             <Alert/>
             <br/>
