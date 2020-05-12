@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {getProduct,} from "../actions/products";
-import {buy} from "../actions/orders";
+import {getProduct} from "../actions/products";
+import {buy, closeSuccessModal} from "../actions/orders";
 import CarouselImage from "../components/CorouselImage";
 import Modal from 'react-modal';
 import Cookies from 'universal-cookie';
 import NavBar from "../components/NavBar";
 import Alert from "../components/Alert";
-import { css } from "@emotion/core";
+import {css} from "@emotion/core";
 import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
 
 const override = css`
@@ -25,6 +25,14 @@ const customStyles = {
         color: 'white',
         background: '#2d545e',
         background: '#2d545e'
+    }
+};
+
+const customAlertStyles = {
+    content: {
+        color: 'white',
+        background: '#44BDAC',
+        background: '#44BDAC'
     }
 };
 
@@ -45,7 +53,7 @@ const customLoadingStyles = {
     }
 };
 
-const Product = ({id, getProduct, buy, products}) => {
+const Product = ({id, getProduct, buy, products, orders, closeSuccessModal}) => {
     useEffect(() => {
         getProduct(id);
         window.scrollTo(0, 0);
@@ -150,6 +158,9 @@ const Product = ({id, getProduct, buy, products}) => {
         setIsOpen(false);
         setFormData({...formData, showArrows: true})
     };
+    const closeAlertModal = () => {
+        closeSuccessModal();
+    }
 
     console.log(products);
 
@@ -168,6 +179,19 @@ const Product = ({id, getProduct, buy, products}) => {
                         color={"rgba(242, 211, 73, 0.8)"}
                         loading={loading}
                     />
+                </div>
+            </Modal>
+            <Modal
+                isOpen={orders && orders.order_success}
+                onRequestClose={closeAlertModal}
+                style={customAlertStyles}
+            >
+                <div className={'row justify-content-center align-items-center '} style={{marginTop: '10%'}}>
+                    <p style={{width: '48px'}}><i className="fa fa-check fa-5x"></i></p>
+                </div>
+                <br/>
+                <div className={'row justify-content-center align-items-center'}>
+                    <p style={{fontSize: '20px'}}>Porosia u krye me sukses!</p>
                 </div>
             </Modal>
             <br/>
@@ -259,12 +283,15 @@ Product.propTypes = {
     id: PropTypes.object.isRequired,
     getProduct: PropTypes.func.isRequired,
     products: PropTypes.object.isRequired,
+    orders: PropTypes.object.isRequired,
     buy: PropTypes.func.isRequired,
+    closeSuccessModal: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, props) => ({
     id: props.match.params.id,
-    products: state.products
+    products: state.products,
+    orders: state.orders
 });
 
-export default connect(mapStateToProps, {getProduct, buy})(Product);
+export default connect(mapStateToProps, {getProduct, buy, closeSuccessModal})(Product);

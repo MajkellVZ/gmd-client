@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {FAIL_ORDERS, GET_ORDERS} from "./types";
+import {FAIL_ORDERS, GET_ORDERS, ORDER_NO_SUCCESS, ORDER_SUCCESS} from "./types";
 import {setAlert} from "./alert";
 
 const API_URL = 'https://gmd-server.xyz/api';
@@ -13,8 +13,11 @@ export const buy = (formData) => async dispatch => {
             }
         };
 
-        const res = await axios.post(`${API_URL}/orders`, formData, config);
-        dispatch(setAlert(res.data, 'success'));
+        await axios.post(`${API_URL}/orders`, formData, config);
+        // dispatch(setAlert(res.data, 'success'));
+        dispatch({
+            type: ORDER_SUCCESS
+        })
     } catch (e) {
         const errors = e.response.data.errors;
 
@@ -73,6 +76,12 @@ export const deleteOrders = id => async dispatch => {
         });
     }
 };
+
+export const closeSuccessModal = () => async dispatch => {
+    dispatch({
+        type: ORDER_NO_SUCCESS
+    })
+}
 
 
 

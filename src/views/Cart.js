@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from "react";
 import Cookies from 'universal-cookie';
-import {buy} from "../actions/orders";
+import {buy, closeSuccessModal} from "../actions/orders";
 import Modal from 'react-modal';
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
@@ -8,7 +8,7 @@ import {getProduct} from "../actions/products";
 import NavBar from "../components/NavBar";
 import Alert from "../components/Alert";
 import ImportProducts from "../components/ImportantProducts";
-import { css } from "@emotion/core";
+import {css} from "@emotion/core";
 import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
 
 const override = css`
@@ -25,6 +25,14 @@ const customStyles = {
         color: 'white',
         background: '#2d545e',
         background: '#2d545e'
+    }
+};
+
+const customAlertStyles = {
+    content: {
+        color: 'white',
+        background: '#44BDAC',
+        background: '#44BDAC'
     }
 };
 
@@ -45,7 +53,7 @@ const customLoadingStyles = {
     }
 };
 
-const Cart = ({buy}) => {
+const Cart = ({buy, closeSuccessModal, orders}) => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -185,6 +193,10 @@ const Cart = ({buy}) => {
         total += product.amount
     });
 
+    const closeAlertModal = () => {
+        closeSuccessModal();
+    }
+
     return (
         <div className={'cart main-container'}>
             <NavBar/>
@@ -200,6 +212,19 @@ const Cart = ({buy}) => {
                         color={"rgba(242, 211, 73, 0.8)"}
                         loading={loading}
                     />
+                </div>
+            </Modal>
+            <Modal
+                isOpen={orders && orders.order_success}
+                onRequestClose={closeAlertModal}
+                style={customAlertStyles}
+            >
+                <div className={'row justify-content-center align-items-center'} style={{marginTop: '10%'}}>
+                    <p style={{width: '48px'}}><i className="fa fa-check fa-5x"></i></p>
+                </div>
+                <br/>
+                <div className={'row justify-content-center align-items-center'}>
+                    <p style={{fontSize: '20px'}}>Porosia u krye me sukses!</p>
                 </div>
             </Modal>
             <br/>
@@ -292,11 +317,14 @@ const Cart = ({buy}) => {
 
 Cart.propTypes = {
     buy: PropTypes.func.isRequired,
+    closeSuccessModal: PropTypes.func.isRequired,
+    orders: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state, props) => ({
     id: props.match.params.id,
-    products: state.products
+    products: state.products,
+    orders: state.orders
 });
 
-export default connect(mapStateToProps, {getProduct, buy})(Cart);
+export default connect(mapStateToProps, {getProduct, buy, closeSuccessModal})(Cart);
