@@ -8,7 +8,7 @@ import {connect} from "react-redux";
 import {Link as Scroll, Link} from 'react-scroll';
 import Modal from 'react-modal';
 import {css} from "@emotion/core";
-import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
+import BarLoader from "react-spinners/BarLoader";
 
 const override = css`
   display: block;
@@ -104,9 +104,10 @@ const Shop = ({getProducts, getProductsByCategory, getProductsAll, filterProduct
                 style={customLoadingStyles}
             >
                 <div className={'row'}>
-                    <ClimbingBoxLoader
+                    <BarLoader
                         css={override}
-                        size={50}
+                        width={500}
+                        height={4}
                         color={"rgba(242, 211, 73, 0.8)"}
                         loading={loading}
                     />

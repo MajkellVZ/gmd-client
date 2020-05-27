@@ -9,7 +9,7 @@ import Cookies from 'universal-cookie';
 import NavBar from "../components/NavBar";
 import Alert from "../components/Alert";
 import {css} from "@emotion/core";
-import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
+import BarLoader from "react-spinners/BarLoader";
 
 const override = css`
   display: block;
@@ -173,9 +173,10 @@ const Product = ({id, getProduct, buy, products, orders, closeSuccessModal}) => 
             >
                 <br/>
                 <div className={'row'}>
-                    <ClimbingBoxLoader
+                    <BarLoader
                         css={override}
-                        size={50}
+                        width={500}
+                        height={4}
                         color={"rgba(242, 211, 73, 0.8)"}
                         loading={loading}
                     />
